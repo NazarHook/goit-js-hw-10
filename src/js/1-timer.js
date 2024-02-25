@@ -4,7 +4,7 @@ import 'flatpickr/dist/flatpickr.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 const input = document.querySelector('input');
-const btn = document.querySelector('button');
+const startBtn = document.querySelector('button');
 const daysField = document.querySelector('span[data-days]');
 const hoursField = document.querySelector('span[data-hours]');
 const minutesField = document.querySelector('span[data-minutes]');
@@ -26,10 +26,10 @@ const options = {
         color: 'red',
         position: 'topRight',
       });
-      btn.disabled = true;
+      startBtn.disabled = true;
       return;
     }
-    btn.disabled = false;
+    startBtn.disabled = false;
     const timeRemaining = convertMs(userSelectedDate - Date.now());
   },
 };
@@ -55,14 +55,14 @@ function convertMs(ms) {
 function addLeadingZero(value) {
   return value.toString().padStart(2, '0');
 }
-function Timer() {
+function timer() {
   if (!timerInterval) {
     timerInterval = setInterval(updateTimer, 1000);
-    btn.disabled = true;
+    startBtn.disabled = true;
     input.disabled = true;
   } else {
     clearInterval(timerInterval);
-    btn.disabled = false;
+    startBtn.disabled = false;
   }
 }
 function updateTimer() {
@@ -79,7 +79,11 @@ function updateTimer() {
     timeRemaining.seconds === 0
   ) {
     clearInterval(timerInterval);
-    btn.disabled = false;
+    startBtn.disabled = false;
   }
 }
-btn.addEventListener('click', Timer);
+startBtn.addEventListener('click', timer);
+window.addEventListener('load', () => {
+  startBtn.disabled = true
+})
+
